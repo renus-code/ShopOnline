@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Web User Registration</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container mt-5">
+<h2>User Registration (WebUser)</h2>
+
+<div th:if="${param.success}" class="alert alert-success">
+    User stored successfully in MongoDB!
+</div>
+
+<form th:action="@{/register}" th:object="${webUser}" method="post" class="col-md-6">
+    <div class="mb-3">
+        <label>Login ID:</label>
+        <input type="text" th:field="*{loginId}" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label>Password:</label>
+        <input type="password" th:field="*{password}" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label>User State:</label>
+        <select th:field="*{state}" class="form-select">
+            <option value="new">New</option>
+            <option value="active">Active</option>
+            <option value="blocked">Blocked</option>
+            <option value="banned">Banned</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+</body>
+</html>
