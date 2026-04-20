@@ -3,6 +3,7 @@ package com.humber.shop.controller;
 
 import com.humber.shop.model.WebUser;
 import com.humber.shop.service.WebUserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,32 @@ public class WebUserController {
     @PostMapping("/register")
     public String saveUser(@ModelAttribute("webUser") WebUser webUser) {
         webUserService.registerUser(webUser);
-        return "redirect:/register?success";
+        return "redirect:/login?registered";
+    }
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String login(@ModelAttribute("loginId") String loginId,
+                        @ModelAttribute("password") String password,
+                        HttpSession session,
+                        Model model) {
+        WebUser user = webUserService.login(loginId, password);
+        if (user != null) {
+            session.setAttribute("loggedInUser", user);
+            return "redirect:/";
+        } else {
+            model.addAttribute("error", "Invalid login ID or password");
+            return "login";
+        }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login?logout";
     }
 }

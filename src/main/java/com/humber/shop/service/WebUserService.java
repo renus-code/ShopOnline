@@ -12,6 +12,17 @@ public class WebUserService {
     private WebUserRepository webUserRepository;
 
     public void registerUser(WebUser user) {
+        if (user.getState() == null) {
+            user.setState("active");
+        }
         webUserRepository.save(user);
+    }
+
+    public WebUser login(String loginId, String password) {
+        WebUser user = webUserRepository.findById(loginId).orElse(null);
+        if (user != null && user.getPassword().equals(password)) {
+            return user;
+        }
+        return null;
     }
 }

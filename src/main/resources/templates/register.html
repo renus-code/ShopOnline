@@ -24,12 +24,15 @@
         <label>User State:</label>
         <select th:field="*{state}" class="form-select">
             <option value="new">New</option>
-            <option value="active">Active</option>
+            <option value="active" selected>Active</option>
             <option value="blocked">Blocked</option>
             <option value="banned">Banned</option>
         </select>
     </div>
-    <button type="submit" class="btn btn-primary">Register</button>
+    <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary">Register</button>
+        <a href="/login" class="btn btn-outline-secondary">Already have an account? Login</a>
+    </div>
 </form>
 </body>
 </html>
